@@ -75,4 +75,20 @@ Update `infra/parameters.json` with your desired resource names and parameters t
 
 ---
 
+## Screenshots
+
+This screenshot demonstrates the automation process: each time a push is made to the main branch, the multi-stage GitHub Actions workflow (pipeline) is automatically triggered:
+
+![Workflow](docs/Workflow.png)
+
+> Screenshot: GitHub Actions workflow.
+
+Here is a screenshot of the deployed Azure Web App and its API response (from app.js) when accessing in the browser:
+
+![API Resume JSON Response](docs/DeployedApp.png)
+
+> Screenshot: JSON response from the Resume API showing name, role, and skills, etc.
+
+---
+
 Feel free to contribute or adapt this as a foundation for your own Azure CI/CD workflows!
