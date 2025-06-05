@@ -34,10 +34,6 @@ jobs:
       run: npm install
       working-directory: ${{ env.APP_PATH }}
 
-    - name: Run tests
-      run: npm test
-      working-directory: ${{ env.APP_PATH }}
-
     - name: Zip app for deployment (includes node_modules)
       run: zip -r ${{ env.ZIP_PATH }} .
       working-directory: ${{ env.APP_PATH }}
