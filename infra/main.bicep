@@ -27,3 +27,4 @@ resource app 'Microsoft.Web/sites@2024-11-01' = {
     httpsOnly: true
   }
 }
+
