@@ -71,6 +71,15 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+
+    - name: Install dependencies
+      run: npm install
+      working-directory: ${{ env.APP_PATH }}
+
     - name: Azure Login
       uses: azure/login@v2
       with:
