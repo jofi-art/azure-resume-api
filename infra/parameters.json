@@ -1,0 +1,8 @@
+{
+  "appServiceName": {
+    "value": "resume-api-<your-unique-suffix>"
+  },
+  "appServicePlanName": {
+    "value": "resume-api-plan"
+  }
+}
