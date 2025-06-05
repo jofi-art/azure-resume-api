@@ -10,7 +10,7 @@ env:
   AZURE_RESOURCE_GROUP: ${{ secrets.RESOURCE_GROUP }}
   AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
   DEPLOYMENT_NAME: resume-api-deployment
-  NODE_VERSION: '18'
+  NODE_VERSION: '20'
   APP_PATH: src
   BICEP_TEMPLATE: infra/main.bicep
   BICEP_PARAMS: infra/parameters.json
