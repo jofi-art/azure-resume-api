@@ -14,10 +14,11 @@ env:
   APP_PATH: src
   BICEP_TEMPLATE: infra/main.bicep
   BICEP_PARAMS: infra/parameters.json
+  ZIP_PATH: packaged-app.zip
 
 jobs:
   build:
-    name: Build & Test
+    name: Build & Package App
     runs-on: ubuntu-latest
 
     steps:
@@ -32,6 +33,16 @@ jobs:
     - name: Install dependencies
       run: npm install
       working-directory: ${{ env.APP_PATH }}
+
+    - name: Zip app for deployment (includes node_modules)
+      run: zip -r ${{ env.ZIP_PATH }} .
+      working-directory: ${{ env.APP_PATH }}
+
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: app-package
+        path: ${{ env.APP_PATH }}/${{ env.ZIP_PATH }}
 
     # Optional: Add test scripts
     # - name: Run tests
@@ -68,17 +79,11 @@ jobs:
     needs: deploy_infra
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
+    - name: Download packaged artifact
+      uses: actions/download-artifact@v4
       with:
-        node-version: ${{ env.NODE_VERSION }}
-
-    - name: Install dependencies
-      run: npm install
-      working-directory: ${{ env.APP_PATH }}
+        name: app-package
+        path: .
 
     - name: Azure Login
       uses: azure/login@v2
@@ -89,4 +94,4 @@ jobs:
       uses: azure/webapps-deploy@v3
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        package: ${{ env.APP_PATH }}
+        package: ${{ env.ZIP_PATH }}
