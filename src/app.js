@@ -7,8 +7,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/resume', (req, res) => {
   res.json({
-    name: "John Doe",
-    role: "Cloud Engineer",
+    name: "Jofiel Salvador",
+    role: "Cloud & DevOps Engineer",
     skills: ["Azure", "Bicep", "DevOps", "GitHub Actions"]
   });
 });
