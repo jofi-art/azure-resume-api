@@ -2,7 +2,7 @@ param location string = resourceGroup().location
 param appServiceName string
 param appServicePlanName string
 
-resource plan 'Microsoft.Web/serverfarms@2022-09-01' = {
+resource plan 'Microsoft.Web/serverfarms@2024-11-01' = {
   name: appServicePlanName
   location: location
   sku: {
@@ -11,13 +11,13 @@ resource plan 'Microsoft.Web/serverfarms@2022-09-01' = {
   }
 }
 
-resource app 'Microsoft.Web/sites@2022-09-01' = {
+resource app 'Microsoft.Web/sites@2024-11-01' = {
   name: appServiceName
   location: location
   properties: {
     serverFarmId: plan.id
     siteConfig: {
-      linuxFxVersion: 'NODE|20-lts'
+      linuxFxVersion: 'NODE|18-lts'
     }
     httpsOnly: true
   }
