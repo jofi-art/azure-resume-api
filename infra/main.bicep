@@ -5,9 +5,13 @@ param appServicePlanName string
 resource plan 'Microsoft.Web/serverfarms@2024-11-01' = {
   name: appServicePlanName
   location: location
+  kind: 'linux'
   sku: {
     name: 'F1'
     tier: 'Free'
+  }
+  properties:{
+    reserved: true
   }
 }
 
