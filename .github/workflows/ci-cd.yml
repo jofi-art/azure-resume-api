@@ -34,6 +34,10 @@ jobs:
       run: npm install
       working-directory: ${{ env.APP_PATH }}
 
+    - name: Run tests
+      run: npm test
+      working-directory: ${{ env.APP_PATH }}
+
     - name: Zip app for deployment (includes node_modules)
       run: zip -r ${{ env.ZIP_PATH }} .
       working-directory: ${{ env.APP_PATH }}
@@ -44,11 +48,6 @@ jobs:
         name: app-package
         path: ${{ env.APP_PATH }}/${{ env.ZIP_PATH }}
 
-    # Optional: Add test scripts
-    # - name: Run tests
-    #   run: npm test
-    #   working-directory: ${{ env.APP_PATH }}
-
   deploy_infra:
     name: Deploy Infrastructure
     runs-on: ubuntu-latest
@@ -58,7 +57,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-   #Login in your azure subscription using a service principal (credentials stored as GitHub Secret in repo)
     - name: Azure Login
       uses: azure/login@v2
       with:
