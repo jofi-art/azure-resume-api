@@ -2,9 +2,10 @@ param location string = resourceGroup().location
 param appServiceName string
 param appServicePlanName string
 
-resource plan 'Microsoft.Web/serverfarms@2024-11-01' = {
+resource plan 'Microsoft.Web/serverfarms@2022-09-01' = {
   name: appServicePlanName
   location: location
+  kind: 'linux'
   properties: {
     reserved: true
   }
