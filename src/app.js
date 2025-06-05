@@ -10,6 +10,7 @@ app.get('/resume', (req, res) => {
     name: "Jofiel Salvador",
     role: "Cloud & DevOps Engineer",
     skills: ["Azure", "Bicep", "DevOps", "GitHub Actions"],
+    Repo: "https://github.com/jofi-art/azure-resume-api/",
     LinkedIn: "https://www.linkedin.com/in/jofiel-arturo-salvador-contreras-813399148/",
     Email: "jofiel21-02@outlook.es"
   });
