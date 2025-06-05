@@ -18,7 +18,7 @@ resource app 'Microsoft.Web/sites@2024-11-01' = {
   properties: {
     serverFarmId: plan.id
     siteConfig: {
-      linuxFxVersion: 'NODE|18-lts'
+      linuxFxVersion: 'NODE:18-lts'
     }
     httpsOnly: true
   }
