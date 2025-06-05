@@ -1,0 +1,79 @@
+name: CI/CD - Resume API
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  AZURE_WEBAPP_NAME: resume-api-jofiart   # must match the Bicep output
+  AZURE_RESOURCE_GROUP: ${{ secrets.RESOURCE_GROUP }}
+  AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  DEPLOYMENT_NAME: resume-api-deployment
+  NODE_VERSION: '18'
+  APP_PATH: src
+  BICEP_TEMPLATE: infra/main.bicep
+  BICEP_PARAMS: infra/parameters.json
+
+jobs:
+  build:
+    name: Build & Test
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+
+    - name: Install dependencies
+      run: npm install
+      working-directory: ${{ env.APP_PATH }}
+
+    # Optional: Add test scripts
+    # - name: Run tests
+    #   run: npm test
+    #   working-directory: ${{ env.APP_PATH }}
+
+  deploy_infra:
+    name: Deploy Infrastructure
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+   #Login in your azure subscription using a service principal (credentials stored as GitHub Secret in repo)
+    - name: Azure Login
+      uses: azure/login@v2
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Deploy Bicep to Azure
+      uses: azure/arm-deploy@v2
+      with:
+        subscriptionId: ${{ env.AZURE_SUBSCRIPTION_ID }}
+        resourceGroupName: ${{ env.AZURE_RESOURCE_GROUP }}
+        template: ${{ env.BICEP_TEMPLATE }}
+        parameters: ${{ env.BICEP_PARAMS }}
+        deploymentName: ${{ env.DEPLOYMENT_NAME }}
+        credentials: ${{ secrets.AZURE_CREDENTIALS }}
+
+  deploy_app:
+    name: Deploy App Code
+    runs-on: ubuntu-latest
+    needs: deploy_infra
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Deploy to Azure Web App
+      uses: azure/webapps-deploy@v3
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        package: ${{ env.APP_PATH }}
