@@ -61,7 +61,6 @@ jobs:
         template: ${{ env.BICEP_TEMPLATE }}
         parameters: ${{ env.BICEP_PARAMS }}
         deploymentName: ${{ env.DEPLOYMENT_NAME }}
-        credentials: ${{ secrets.AZURE_CREDENTIALS }}
 
   deploy_app:
     name: Deploy App Code
