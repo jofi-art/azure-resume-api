@@ -9,7 +9,9 @@ app.get('/resume', (req, res) => {
   res.json({
     name: "Jofiel Salvador",
     role: "Cloud & DevOps Engineer",
-    skills: ["Azure", "Bicep", "DevOps", "GitHub Actions"]
+    skills: ["Azure", "Bicep", "DevOps", "GitHub Actions"],
+    LinkedIn: "https://www.linkedin.com/in/jofiel-arturo-salvador-contreras-813399148/",
+    Email: "jofiel21-02@outlook.es"
   });
 });
 
