@@ -14,6 +14,7 @@ resource plan 'Microsoft.Web/serverfarms@2024-11-01' = {
 resource app 'Microsoft.Web/sites@2024-11-01' = {
   name: appServiceName
   location: location
+  kind: 'app,linux'
   properties: {
     serverFarmId: plan.id
     siteConfig: {
@@ -21,5 +22,4 @@ resource app 'Microsoft.Web/sites@2024-11-01' = {
     }
     httpsOnly: true
   }
-  kind: 'app,linux'
 }
